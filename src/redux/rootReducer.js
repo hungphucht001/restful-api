@@ -1,4 +1,4 @@
-import studentSlice from '../components/Students/studentSlice'
+import studentSlice from '../pages/studentSlice'
 
 const rootReducer = {
     studentSlice: studentSlice.reducer

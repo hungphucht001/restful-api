@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Fab, FormControl, FormHelperText, Input, InputLabel, Paper, TableRow, TextField } from '@mui/material';
+import { Button, Fab, TableRow, TextField } from '@mui/material';
 import { Stack } from '@mui/system';
 import { styled as styledMui } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -13,6 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { useForm } from "react-hook-form";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -51,9 +52,8 @@ const style = {
 const ItemStudent = ({ row }) => {
     const [open, setOpen] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => console.log(data);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -64,11 +64,6 @@ const ItemStudent = ({ row }) => {
     const handleCloseDialog = () => {
         setOpenDialog(false);
     };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log('Email:', email, 'Password: ', password);
-    }
-
     return (
         <StyledTableRow key={row.firstName}>
             <StyledTableCell component="th" scope="row">
@@ -92,28 +87,33 @@ const ItemStudent = ({ row }) => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <form onSubmit={handleSubmit} >
-                            <Stack spacing={1} sx={{ width: '100%' }}>
-                                <TextField
-                                    label="Outlined"
-                                    value={email}
-                                    onInput={e => setEmail(e.target.value)}
-                                />
-                                <TextField
-                                    label="Outlined"
-                                    value={password}
-                                    onInput={e => setPassword(e.target.value)}
-                                />
-                                {/* <Typography /> */}
-                                <Button
-                                    variant="contained"
-                                    size='large'
-                                    type="submit"
-                                >
-                                    Login
-                                </Button>
-                            </Stack>
-                        </form>
+                        <div>
+                            dưq
+                        </div>
+                        <div>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <Stack spacing={4} sx={{ width: '100%' }}>
+                                    <TextField defaultValue={row.firstName} label="Email" {...register("firstName", { required: true })} />
+                                    <TextField defaultValue={row.lastName} label="Email" {...register("lastName", { required: true })} />
+                                    <TextField defaultValue={row.email} label="Email" {...register("email", { required: true })} />
+                                    <Stack justifyContent="flex-end" direction="row" spacing={2}>
+                                        <Button
+                                            size="large" color="secondary"
+                                            onClick={handleClose}
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            size='large'
+                                            type="submit"
+                                        >
+                                            Update
+                                        </Button>
+                                    </Stack>
+                                </Stack>
+                            </form>
+                        </div>
                     </Box>
                 </Modal>
                 <Dialog
@@ -123,11 +123,10 @@ const ItemStudent = ({ row }) => {
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+                    <DialogTitle>{"Notification"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                            Let Google help apps determine location. This means sending anonymous
-                            location data to Google, even when no apps are running.
+                            Delete Student: {row.firstName + " " + row.lastName}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

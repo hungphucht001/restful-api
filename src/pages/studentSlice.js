@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 const initialState = {
     data: [],
@@ -14,6 +14,9 @@ const studentSlice = createSlice({
         deleteStudent: (state, action) => {
 
         },
+        deleteAllStudent: (state, action) => {
+
+        },
         detailStudent: (state, action) => {
 
         },
@@ -21,6 +24,9 @@ const studentSlice = createSlice({
 
         },
         searchStudent: (state, action) => {
+
+        },
+        updateStudent: (state, action) => {
 
         }
     }
