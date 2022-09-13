@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import styled from 'styled-components';
-import ItemStudent from '../components/Students/ItemStudent';
+import ItemStudent from '../../components/Students/ItemStudent';
 
 const StyledTableCell = styledMui(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

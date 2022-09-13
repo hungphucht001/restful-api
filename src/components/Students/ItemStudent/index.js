@@ -7,17 +7,12 @@ import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Modal from '@mui/material/Modal';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { useForm } from "react-hook-form";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import { useForm } from "react-hook-form";
+import styled from "styled-components"
+import DialogCustom from '../../DialogCustom';
+
+
 
 const StyledTableRow = styledMui(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
@@ -46,8 +41,18 @@ const style = {
     width: 400,
     bgcolor: 'background.paper',
     boxShadow: 24,
-    p: 4,
+    overflow: 'hidden'
 };
+
+const Header = styled.div`
+    background-color: #ccc;
+    color: #fff;
+    padding: 20px;
+`
+const WrapForm = styled.div`
+    padding: 20px;
+    margin-top: 20px;
+`
 
 const ItemStudent = ({ row }) => {
     const [open, setOpen] = useState(false);
@@ -87,10 +92,10 @@ const ItemStudent = ({ row }) => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <div>
-                            dưq
-                        </div>
-                        <div>
+                        <Header>
+                            Edit Student
+                        </Header>
+                        <WrapForm>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <Stack spacing={4} sx={{ width: '100%' }}>
                                     <TextField defaultValue={row.firstName} label="Email" {...register("firstName", { required: true })} />
@@ -113,27 +118,13 @@ const ItemStudent = ({ row }) => {
                                     </Stack>
                                 </Stack>
                             </form>
-                        </div>
+                        </WrapForm>
                     </Box>
                 </Modal>
-                <Dialog
-                    open={openDialog}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={handleClose}
-                    aria-describedby="alert-dialog-slide-description"
-                >
-                    <DialogTitle>{"Notification"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            Delete Student: {row.firstName + " " + row.lastName}
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="contained" onClick={handleCloseDialog}>Cancel</Button>
-                        <Button variant="contained" color="error" onClick={handleCloseDialog}>Delete</Button>
-                    </DialogActions>
-                </Dialog>
+                <DialogCustom
+                    openDialog={openDialog}
+                    onCloseDialog={handleCloseDialog}
+                    label={`Delete Student: ${row.firstName + " " + row.lastName}`} />
             </StyledTableCell>
         </StyledTableRow >
     );
